@@ -1,0 +1,54 @@
+buildscript {
+	dependencies{
+		classpath 'com.netflix.graphql.dgs.codegen:graphql-dgs-codegen-gradle:5.1.17'
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.7.0-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.jmaham'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
+	implementation "com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter"
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.6'
+	implementation 'com.h2database:h2:2.1.212'
+}
+
+//apply plugin: 'com.netflix.dgs.codegen'
+
+//generateJava{
+//	schemaPaths = ["${projectDir}/src/main/resources/schema"] // List of directories containing schema files
+//	packageName = 'com.jmaham.generated' // The package name to use to generate sources
+//	generateClient = true // Enable generating the type safe query API
+//}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+
+
+
+
